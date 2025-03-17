@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>musicForProgramming(); Player</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="terminal">
+        <pre class="header">
+/* musicForProgramming(); MP3 Player */
+        </pre>
+    <audio id="audio"></audio>
+    <div class="controls">
+        <span class="command" id="prev">[prev]</span>
+        <span class="command" id="rew">[-30s]</span>
+        <span class="command" id="play-stop">[play]</span>
+        <span class="command" id="fwd">[+30s]</span>
+        <span class="command" id="next">[next]</span>
+    </div>
+    <div class="status">
+        <div class="track-container">
+            <span id="track">track: [Аигел - Тебе кажется]</span>
+        </div>
+    </div>
+    <div class="status">
+        <span id="time">0:00 / 0:00</span>
+        <span class="command" id="vol-down">[v-]</span>
+        <span id="volume">100%</span>
+        <span class="command" id="vol-up">[v+]</span>
+    </div>
+    <div class="playlist">
+        <span class="command track" data-src="audio/Аигел - Тебе кажется.mp3">[Аигел - Тебе кажется]</span>
+        <span class="command track" data-src="audio/track2.mp3">[track_002]</span>
+        <span class="command track" data-src="audio/track3.mp3">[track_003]</span>
+    </div>
+    <pre class="footer">
+/* end transmission */
+        </pre>
+</div>
+<script src="app.js"></script>
+</body>
+</html>

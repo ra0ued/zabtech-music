@@ -1,0 +1,75 @@
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #000;
+}
+
+.terminal {
+    color: #0f0; /* Зеленый цвет текста */
+    font-family: "Courier New", Courier, monospace;
+    font-size: 16px;
+    padding: 20px;
+    border: 1px solid #0f0;
+    background-color: #000;
+}
+
+.header, .footer {
+    margin: 0;
+}
+
+.controls, .status, .playlist {
+    margin: 10px 0;
+}
+
+.command {
+    cursor: pointer;
+    margin-right: 15px;
+}
+
+.command:hover {
+    text-decoration: underline;
+}
+
+.track.active {
+    background-color: #0f0;
+    color: #000;
+}
+
+.status {
+    display: flex;
+    align-items: center;
+}
+
+.status span {
+    margin-right: 15px;
+}
+
+.track-container {
+    width: 400px; /* Фиксированная ширина области трека */
+    overflow: hidden;
+    white-space: nowrap;
+    display: inline-block;
+}
+
+#track {
+    display: inline-block;
+    animation: marquee 10s linear infinite; /* Бегущая строка */
+}
+
+/* Анимация бегущей строки */
+@keyframes marquee {
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+/* Останавливаем анимацию при наведении */
+#track:hover {
+    animation-play-state: paused;
+}
