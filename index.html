@@ -3,14 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>musicForProgramming(); Player</title>
+    <title>zabtechMusic();</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 <div class="terminal">
-        <pre class="header">
-/* musicForProgramming(); MP3 Player */
-        </pre>
+    <pre class="header"><span class="function">function</span> zabtechMusic() { <span
+            class="function">return</span> <span class="var">$music</span>; }</pre>
     <audio id="audio"></audio>
     <div class="controls">
         <span class="command" id="prev">[prev]</span>
@@ -21,7 +20,7 @@
     </div>
     <div class="status">
         <div class="track-container">
-            <span id="track">track: [Аигел - Тебе кажется]</span>
+            <span id="track"></span>
         </div>
     </div>
     <div class="status">
@@ -30,14 +29,8 @@
         <span id="volume">100%</span>
         <span class="command" id="vol-up">[v+]</span>
     </div>
-    <div class="playlist">
-        <span class="command track" data-src="audio/Аигел - Тебе кажется.mp3">[Аигел - Тебе кажется]</span>
-        <span class="command track" data-src="audio/track2.mp3">[track_002]</span>
-        <span class="command track" data-src="audio/track3.mp3">[track_003]</span>
-    </div>
-    <pre class="footer">
-/* end transmission */
-        </pre>
+    <div class="playlist" id="playlist"></div>
+    <pre class="footer">/* end transmission */</pre>
 </div>
 <script src="app.js"></script>
 </body>

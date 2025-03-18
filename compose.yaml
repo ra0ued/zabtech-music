@@ -1,0 +1,36 @@
+services:
+  music_nginx:
+    image: nginx:latest
+    container_name: music_nginx
+    ports:
+      - "80:80"
+      - "8080:80"
+      - "443:443"
+    volumes:
+      - .:/var/www/html
+      - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+    environment:
+      - NGINX_HOST=music.zabtech.ru
+      - NGINX_PORT=80
+    networks:
+      - internal
+
+  music_app:
+    build:
+      context: ./docker/php
+      dockerfile: Dockerfile
+    container_name: music_app
+    ports:
+      - "9000:9000"
+    expose:
+      - "9000"
+    volumes:
+      - .:/var/www/html
+    networks:
+      - internal
+    command:
+      - "php-fpm"
+
+networks:
+  internal:
+    driver: bridge

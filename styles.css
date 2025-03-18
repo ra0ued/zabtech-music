@@ -8,12 +8,19 @@ body {
 }
 
 .terminal {
-    color: #0f0; /* Зеленый цвет текста */
+    color: #1cc51c;
     font-family: "Courier New", Courier, monospace;
     font-size: 16px;
     padding: 20px;
-    border: 1px solid #0f0;
     background-color: #000;
+}
+
+.function {
+    color: #ff9528;
+}
+
+.var {
+    color: #b462ff;
 }
 
 .header, .footer {
@@ -30,13 +37,15 @@ body {
 }
 
 .command:hover {
-    text-decoration: underline;
+    background-color: #1cc51c;
+    color: black;
 }
 
 .track.active {
-    background-color: #0f0;
+    background-color: #1cc51c;
     color: #000;
 }
+
 
 .status {
     display: flex;
@@ -59,17 +68,19 @@ body {
     animation: marquee 10s linear infinite; /* Бегущая строка */
 }
 
-/* Анимация бегущей строки */
 @keyframes marquee {
-    0% {
-        transform: translateX(100%);
-    }
-    100% {
-        transform: translateX(-100%);
-    }
+    0% { transform: translateX(100%); }
+    100% { transform: translateX(-100%); }
 }
 
-/* Останавливаем анимацию при наведении */
 #track:hover {
     animation-play-state: paused;
+}
+
+.playlist .artist {
+    margin-bottom: 5px;
+}
+
+.playlist .album {
+    margin-left: 20px;
 }

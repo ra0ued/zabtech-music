@@ -1,43 +1,95 @@
 document.addEventListener('DOMContentLoaded', () => {
     const audio = document.getElementById('audio');
-    const playPauseCmd = document.getElementById('play-stop');
+    const playStopCmd = document.getElementById('play-stop');
     const nextCmd = document.getElementById('next');
     const previousCmd = document.getElementById('prev');
     const rewCmd = document.getElementById('rew');
     const fwdCmd = document.getElementById('fwd');
-    const trackDisplay = document.getElementById('track');
-    const timeDisplay = document.getElementById('time');
-    const tracks = document.querySelectorAll('.track');
     const volUpCmd = document.getElementById('vol-up');
     const volDownCmd = document.getElementById('vol-down');
+    const trackDisplay = document.getElementById('track');
+    const timeDisplay = document.getElementById('time');
     const volumeDisplay = document.getElementById('volume');
+    const playlistContainer = document.getElementById('playlist');
 
+    let playlist = [];
     let currentTrackIndex = 0;
 
-    // Список треков
-    const playlist = Array.from(tracks).map(track => ({
-        src: track.dataset.src,
-        name: track.textContent
-    }));
+    // Загрузка треков с сервера
+    fetch('api.php')
+        .then(response => response.json())
+        .then(data => {
+            let trackIndex = 0;
+            for (const artist in data) {
+                const artistLi = document.createElement('li');
+                artistLi.className = 'artist';
+                artistLi.textContent = artist;
+                playlistContainer.appendChild(artistLi);
 
-    // Инициализация первого трека
-    const loadTrack = (index) => {
+                const artistUl = document.createElement('ul');
+                artistLi.appendChild(artistUl);
+
+                for (const album in data[artist].albums) {
+                    const albumLi = document.createElement('li');
+                    albumLi.className = 'album';
+                    albumLi.textContent = album;
+                    artistUl.appendChild(albumLi);
+
+                    const albumUl = document.createElement('ul');
+                    albumLi.appendChild(albumUl);
+
+                    data[artist].albums[album].forEach(trackSrc => {
+                        const trackLi = document.createElement('li');
+                        const trackSpan = document.createElement('span');
+                        trackSpan.className = 'command track';
+                        const trackName = trackSrc.split('/').pop().replace('.mp3', '');
+                        trackSpan.textContent = `[${trackName}]`;
+                        trackSpan.dataset.src = trackSrc;
+                        trackSpan.dataset.index = trackIndex++;
+                        trackLi.appendChild(trackSpan);
+                        albumUl.appendChild(trackLi);
+
+                        playlist.push({
+                            src: trackSrc,
+                            name: `[${artist} - ${album} - ${trackName}]`
+                        });
+                    });
+                }
+            }
+            loadTrack(0); // Загружаем первый трек
+            addTrackListeners(); // Добавляем обработчики кликов
+        });
+
+
+    // Загрузка трека
+    function loadTrack(index) {
         audio.src = playlist[index].src;
-        trackDisplay.textContent = `track: ${playlist[index].name}`;
-        tracks.forEach(t => t.classList.remove('active'));
-        tracks[index].classList.add('active');
+        trackDisplay.textContent = `${playlist[index].name}`;
+        document.querySelectorAll('.track').forEach(t => t.classList.remove('active'));
+        document.querySelector(`.track[data-index="${index}"]`)?.classList.add('active');
         currentTrackIndex = index;
-    };
-    loadTrack(currentTrackIndex);
+    }
+
+    // Обработчики кликов по трекам
+    function addTrackListeners() {
+        document.querySelectorAll('.track').forEach(track => {
+            track.addEventListener('click', () => {
+                const index = parseInt(track.dataset.index);
+                loadTrack(index);
+                audio.play();
+                playStopCmd.textContent = '[stop]';
+            });
+        });
+    }
 
     // Play/Stop
-    playPauseCmd.addEventListener('click', () => {
+    playStopCmd.addEventListener('click', () => {
         if (audio.paused) {
             audio.play();
-            playPauseCmd.textContent = '[stop]';
+            playStopCmd.textContent = '[stop]';
         } else {
             audio.pause();
-            playPauseCmd.textContent = '[play]';
+            playStopCmd.textContent = '[play]';
         }
     });
 
@@ -46,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
         currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
         loadTrack(currentTrackIndex);
         audio.play();
-        playPauseCmd.textContent = '[pause]';
+        playStopCmd.textContent = '[stop]';
     });
 
     // Previous
@@ -54,7 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
         currentTrackIndex = (currentTrackIndex - 1 + playlist.length) % playlist.length;
         loadTrack(currentTrackIndex);
         audio.play();
-        playPauseCmd.textContent = '[pause]';
+        playStopCmd.textContent = '[stop]';
     });
 
     // Rewind (-30 секунд)
@@ -65,15 +117,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Forward (+30 секунд)
     fwdCmd.addEventListener('click', () => {
         audio.currentTime = Math.min(audio.duration || 0, audio.currentTime + 30);
-    });
-
-    // Выбор трека из плейлиста
-    tracks.forEach((track, index) => {
-        track.addEventListener('click', () => {
-            loadTrack(index);
-            audio.play();
-            playPauseCmd.textContent = '[pause]';
-        });
     });
 
     // Обновление времени
