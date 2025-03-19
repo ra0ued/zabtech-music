@@ -15,14 +15,6 @@ body {
     background-color: #000;
 }
 
-.function {
-    color: #ff9528;
-}
-
-.var {
-    color: #b462ff;
-}
-
 .header, .footer {
     margin: 0;
 }
@@ -46,7 +38,6 @@ body {
     color: #000;
 }
 
-
 .status {
     display: flex;
     align-items: center;
@@ -57,7 +48,7 @@ body {
 }
 
 .track-container {
-    width: 400px; /* Фиксированная ширина области трека */
+    width: 400px;
     overflow: hidden;
     white-space: nowrap;
     display: inline-block;
@@ -65,22 +56,67 @@ body {
 
 #track {
     display: inline-block;
-    animation: marquee 10s linear infinite; /* Бегущая строка */
+    animation: marquee 10s linear infinite;
 }
 
 @keyframes marquee {
-    0% { transform: translateX(100%); }
-    100% { transform: translateX(-100%); }
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
 }
 
 #track:hover {
     animation-play-state: paused;
 }
 
-.playlist .artist {
-    margin-bottom: 5px;
+.playlist {
+    list-style: none;
+    padding: 0;
+    max-height: 300px;
+    overflow-y: auto;
 }
 
-.playlist .album {
-    margin-left: 20px;
+.playlist .artist, .playlist .album {
+    cursor: pointer;
+}
+
+.playlist .artist > span::before, .playlist .album > span::before {
+    content: '[+] ';
+    display: inline-block;
+    width: 20px;
+    padding-right: 10px;
+}
+
+.playlist .artist.expanded > span::before, .playlist .album.expanded > span::before {
+    content: '[-] ';
+    padding-right: 10px;
+}
+
+.playlist ul {
+    display: none; /* Скрываем вложенные списки по умолчанию */
+    list-style: none;
+    padding-left: 20px;
+}
+
+.playlist .expanded > ul {
+    display: block; /* Показываем при раскрытии */
+}
+
+.playlist li {
+    margin: 2px 0;
+}
+
+.function {
+    color: #ff9528;
+}
+
+.var {
+    color: #b462ff;
+}
+
+.commented {
+    color: dimgray;
 }

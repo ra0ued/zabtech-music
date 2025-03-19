@@ -23,7 +23,9 @@ document.addEventListener('DOMContentLoaded', () => {
             for (const artist in data) {
                 const artistLi = document.createElement('li');
                 artistLi.className = 'artist';
-                artistLi.textContent = artist;
+                const artistSpan = document.createElement('span');
+                artistSpan.textContent = artist;
+                artistLi.appendChild(artistSpan);
                 playlistContainer.appendChild(artistLi);
 
                 const artistUl = document.createElement('ul');
@@ -32,7 +34,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 for (const album in data[artist].albums) {
                     const albumLi = document.createElement('li');
                     albumLi.className = 'album';
-                    albumLi.textContent = album;
+                    const albumSpan = document.createElement('span');
+                    albumSpan.textContent = album;
+                    albumLi.appendChild(albumSpan);
                     artistUl.appendChild(albumLi);
 
                     const albumUl = document.createElement('ul');
@@ -58,8 +62,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             loadTrack(0); // Загружаем первый трек
             addTrackListeners(); // Добавляем обработчики кликов
+            addCollapseListeners(); // Добавляем сворачивание
         });
-
 
     // Загрузка трека
     function loadTrack(index) {
@@ -78,6 +82,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 loadTrack(index);
                 audio.play();
                 playStopCmd.textContent = '[stop]';
+            });
+        });
+    }
+
+    // Обработчики сворачивания/разворачивания
+    function addCollapseListeners() {
+        document.querySelectorAll('.artist > span, .album > span').forEach(header => {
+            header.addEventListener('click', () => {
+                const parent = header.parentElement;
+                parent.classList.toggle('expanded');
             });
         });
     }
@@ -156,3 +170,5 @@ document.addEventListener('DOMContentLoaded', () => {
     audio.volume = 1; // 100% по умолчанию
     updateVolumeDisplay();
 });
+
+document.querySelector('.artist').classList.add('expanded');
