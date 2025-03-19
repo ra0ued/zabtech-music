@@ -170,5 +170,3 @@ document.addEventListener('DOMContentLoaded', () => {
     audio.volume = 1; // 100% по умолчанию
     updateVolumeDisplay();
 });
-
-document.querySelector('.artist').classList.add('expanded');
