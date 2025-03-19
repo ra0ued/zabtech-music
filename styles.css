@@ -120,3 +120,11 @@ body {
 .commented {
     color: dimgray;
 }
+
+.function-name {
+    color: royalblue;
+}
+
+.brace {
+    color: #d8d7d7;
+}
