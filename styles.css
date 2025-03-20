@@ -4,7 +4,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #000;
+    background-color: #131313;
 }
 
 .terminal {
@@ -12,7 +12,7 @@ body {
     font-family: "Courier New", Courier, monospace;
     font-size: 16px;
     padding: 20px;
-    background-color: #000;
+    background-color: #131313;
 }
 
 .header, .footer {
@@ -30,12 +30,17 @@ body {
 
 .command:hover {
     background-color: #1cc51c;
-    color: black;
+    color: #131313;
+}
+
+.command.active {
+    background-color: #1cc51c;
+    color: #131313;
 }
 
 .track.active {
     background-color: #1cc51c;
-    color: #000;
+    color:  #131313;
 }
 
 .status {
@@ -83,28 +88,33 @@ body {
     cursor: pointer;
 }
 
-.playlist .artist > span::before, .playlist .album > span::before {
-    content: '[+] ';
+.playlist .artist > .toggle, .playlist .album > .toggle {
     display: inline-block;
-    white-space: nowrap;
     width: 20px;
+    text-align: center;
     padding-right: 10px;
 }
 
-.playlist .artist.expanded > span::before, .playlist .album.expanded > span::before {
+.playlist .artist:not(.expanded) > .toggle::before,
+.playlist .album:not(.expanded) > .toggle::before {
+    content: '[+] ';
+    white-space: nowrap;
+}
+
+.playlist .artist.expanded > .toggle::before,
+.playlist .album.expanded > .toggle::before {
     content: '[-] ';
     white-space: nowrap;
-    padding-right: 10px;
 }
 
 .playlist ul {
-    display: none; /* Скрываем вложенные списки по умолчанию */
+    display: none;
     list-style: none;
     padding-left: 20px;
 }
 
 .playlist .expanded > ul {
-    display: block; /* Показываем при раскрытии */
+    display: block;
 }
 
 .playlist li {
