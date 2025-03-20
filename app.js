@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         albumUl.appendChild(trackLi);
 
                         playlist.push({
-                            src: trackSrc,
+                            src: encodeURI(trackSrc),
                             name: `[${artist} - ${album} - ${trackName}]`
                         });
                     });
