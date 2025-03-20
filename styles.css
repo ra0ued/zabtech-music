@@ -123,42 +123,6 @@ body {
     margin: 2px 0;
 }
 
-/* Mobile*/
-@media (max-width: 600px) {
-    .terminal {
-        font-size: 14px;
-        padding: 10px;
-    }
-
-    .controls {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 5px;
-    }
-
-    .command {
-        margin-right: 10px;
-    }
-
-    .status {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .track-container {
-        width: 100%;
-        margin-bottom: 5px;
-    }
-
-    .playlist {
-        padding-left: 0;
-    }
-
-    .playlist ul {
-        padding-left: 10px;
-    }
-}
-
 /* Code styling */
 .function {
     color: #ff9528;
