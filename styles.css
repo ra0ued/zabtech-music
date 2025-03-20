@@ -32,6 +32,13 @@ body {
     display: inline-block;
 }
 
+.track {
+    cursor: pointer;
+    margin-right: 15px;
+    display: inline-block;
+    word-wrap: break-word;
+}
+
 .command:hover {
     background-color: #1cc51c;
     color: #131313;
