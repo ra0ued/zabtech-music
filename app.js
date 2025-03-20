@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         trackSpan.className = 'command track';
                         const trackName = trackSrc.split('/').pop().replace('.mp3', '');
                         trackSpan.textContent = `[${trackName}]`;
-                        trackSpan.dataset.src = trackSrc;
+                        trackSpan.dataset.src = encodeURI(trackSrc);
                         trackSpan.dataset.index = trackIndex++;
                         trackLi.appendChild(trackSpan);
                         albumUl.appendChild(trackLi);
