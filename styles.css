@@ -25,6 +25,7 @@ body {
 
 .command {
     cursor: pointer;
+    white-space: nowrap;
     margin-right: 15px;
 }
 
