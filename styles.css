@@ -86,12 +86,14 @@ body {
 .playlist .artist > span::before, .playlist .album > span::before {
     content: '[+] ';
     display: inline-block;
+    white-space: nowrap;
     width: 20px;
     padding-right: 10px;
 }
 
 .playlist .artist.expanded > span::before, .playlist .album.expanded > span::before {
     content: '[-] ';
+    white-space: nowrap;
     padding-right: 10px;
 }
 
