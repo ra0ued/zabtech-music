@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Загрузка трека
     function loadTrack(index) {
         audio.src = playlist[index].src;
-        trackDisplay.textContent = `track: ${playlist[index].name}`;
+        trackDisplay.textContent = `${playlist[index].name}`;
         document.querySelectorAll('.track').forEach(t => t.classList.remove('active'));
         document.querySelector(`.track[data-index="${index}"]`)?.classList.add('active');
         currentTrackIndex = index;

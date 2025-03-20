@@ -13,6 +13,8 @@ body {
     font-size: 16px;
     padding: 20px;
     background-color: #131313;
+    max-width: 800px;
+    box-sizing: border-box;
 }
 
 .header, .footer {
@@ -27,6 +29,7 @@ body {
     cursor: pointer;
     white-space: nowrap;
     margin-right: 15px;
+    display: inline-block;
 }
 
 .command:hover {
@@ -47,6 +50,7 @@ body {
 .status {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 .status span {
@@ -66,12 +70,8 @@ body {
 }
 
 @keyframes marquee {
-    0% {
-        transform: translateX(100%);
-    }
-    100% {
-        transform: translateX(-100%);
-    }
+    0% { transform: translateX(100%); }
+    100% { transform: translateX(-100%); }
 }
 
 #track:hover {
@@ -81,7 +81,7 @@ body {
 .playlist {
     list-style: none;
     padding: 0;
-    max-height: 300px;
+    max-height: 50vh;
     overflow-y: auto;
 }
 
@@ -94,6 +94,7 @@ body {
     width: 20px;
     text-align: center;
     padding-right: 10px;
+    flex-shrink: 0;
 }
 
 .playlist .artist:not(.expanded) > .toggle::before,
@@ -111,7 +112,7 @@ body {
 .playlist ul {
     display: none;
     list-style: none;
-    padding-left: 20px;
+    padding-left: 15px;
 }
 
 .playlist .expanded > ul {
@@ -122,6 +123,43 @@ body {
     margin: 2px 0;
 }
 
+/* Mobile*/
+@media (max-width: 600px) {
+    .terminal {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    .controls {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+    }
+
+    .command {
+        margin-right: 10px;
+    }
+
+    .status {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .track-container {
+        width: 100%;
+        margin-bottom: 5px;
+    }
+
+    .playlist {
+        padding-left: 0;
+    }
+
+    .playlist ul {
+        padding-left: 10px;
+    }
+}
+
+/* Code styling */
 .function {
     color: #ff9528;
 }
