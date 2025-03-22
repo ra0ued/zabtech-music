@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let repeatMode = 0; // 0: off, 1: track, 2: album, 3: playlist
     let shuffledIndexes = [];
     let currentAlbumTracks = [];
+    let spinnerInterval = null;
 
     // Загрузка треков с сервера
     fetch('api.php')
@@ -84,10 +85,39 @@ document.addEventListener('DOMContentLoaded', () => {
     function loadTrack(index) {
         audio.src = playlist[index].src;
         trackDisplay.textContent = `${playlist[index].name}`;
-        document.querySelectorAll('.track').forEach(t => t.classList.remove('active'));
-        document.querySelector(`.track[data-index="${index}"]`)?.classList.add('active');
+        document.querySelectorAll('.track').forEach(t => {
+            t.classList.remove('active');
+            const spinner = t.querySelector('.spinner');
+            if (spinner) spinner.remove();
+        });
+        const activeTrack = document.querySelector(`.track[data-index="${index}"]`);
+        if (activeTrack) {
+            activeTrack.classList.add('active');
+            const spinner = document.createElement('span');
+            spinner.className = 'spinner';
+            activeTrack.appendChild(spinner);
+        }
         currentTrackIndex = index;
         updateCurrentAlbumTracks();
+        updateSpinner();
+    }
+
+    // Обновление спиннера
+    function updateSpinner() {
+        const spinner = document.querySelector('.spinner');
+        if (!spinner) return;
+
+        if (spinnerInterval) clearInterval(spinnerInterval);
+        if (!audio.paused) {
+            const frames = ['|', '/', '-', '\\'];
+            let frameIndex = 0;
+            spinnerInterval = setInterval(() => {
+                spinner.textContent = frames[frameIndex];
+                frameIndex = (frameIndex + 1) % frames.length;
+            }, 150); // Скорость вращения
+        } else {
+            spinner.textContent = '';
+        }
     }
 
     // Обновление списка треков текущего альбома
@@ -127,6 +157,7 @@ document.addEventListener('DOMContentLoaded', () => {
             audio.pause();
             playStopCmd.textContent = '[play]';
         }
+        updateSpinner();
     });
 
     // Next

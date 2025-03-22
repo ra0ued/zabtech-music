@@ -130,6 +130,14 @@ body {
     margin: 2px 0;
 }
 
+.spinner {
+    display: inline-block;
+    width: 10px;
+    text-align: center;
+    color: #1cc51c;
+    background-color: #131313;
+}
+
 /* Code styling */
 .function {
     color: #ff9528;
