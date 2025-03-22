@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>zM</text></svg>">
+    <link rel="icon"
+          href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>zM</text></svg>">
     <title>zabtechMusic();</title>
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -22,20 +23,33 @@
         <span class="command" id="next">[next]</span>
     </div>
     <div class="status">
+        <span id="time">0:00 / 0:00</span>
         <div class="track-container">
             <span id="track"></span>
         </div>
     </div>
     <div class="status">
-        <span id="time">0:00 / 0:00</span>
         <span class="command" id="vol-down">[v-]</span>
         <span id="volume">100%</span>
         <span class="command" id="vol-up">[v+]</span>
         <span class="command" id="shuffle">[rnd]</span>
         <span class="command" id="repeat">[rpt]</span>
+        <span class="command" id="about">[?]</span>
     </div>
     <ul class="playlist" id="playlist"></ul>
     <pre class="commented">/* Someone turned on an FTP from 2007 */</pre>
+</div>
+<div class="modal" id="about-modal">
+    <div class="modal-content">
+        <span class="close">[x]</span>
+        <pre>
+/* About This Player */
+Легковесный mp3 плеер открывает вам окно в мой 2007-й.
+Произведено искусственным интеллектом в zabtech.ru.
+2025 год.
+/* End About */
+            </pre>
+    </div>
 </div>
 <script src="app.js"></script>
 </body>

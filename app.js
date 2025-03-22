@@ -13,6 +13,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const playlistContainer = document.getElementById('playlist');
     const shuffleCmd = document.getElementById('shuffle');
     const repeatCmd = document.getElementById('repeat');
+    const aboutModal = document.getElementById('about-modal');
+    const closeModal = document.querySelector('.close');
+    const aboutCmd = document.getElementById('about');
 
     let playlist = [];
     let currentTrackIndex = 0;
@@ -210,6 +213,22 @@ document.addEventListener('DOMContentLoaded', () => {
             case 3:
                 repeatCmd.textContent = '[all]';
                 break;
+        }
+    });
+
+    // About (Modal)
+    aboutCmd.addEventListener('click', () => {
+        aboutModal.style.display = 'flex';
+    });
+
+    closeModal.addEventListener('click', () => {
+        aboutModal.style.display = 'none';
+    });
+
+    // Закрытие по клику вне окна
+    aboutModal.addEventListener('click', (e) => {
+        if (e.target === aboutModal) {
+            aboutModal.style.display = 'none';
         }
     });
 

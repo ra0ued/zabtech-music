@@ -1,18 +1,23 @@
+:root {
+    --console-green: #1cc51c;
+    --console-black: #131313;
+}
+
 body {
     margin: 0;
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #131313;
+    background-color: var(--console-black);
 }
 
 .terminal {
-    color: #1cc51c;
+    color: var(--console-green);
     font-family: "Courier New", Courier, monospace;
     font-size: 16px;
     padding: 20px;
-    background-color: #131313;
+    background-color: var(--console-black);
     max-width: 800px;
     box-sizing: border-box;
 }
@@ -40,18 +45,13 @@ body {
 }
 
 .command:hover {
-    background-color: #1cc51c;
-    color: #131313;
+    background-color: var(--console-black);
+    color: var(--console-green);
 }
 
-.command.active {
-    background-color: #1cc51c;
-    color: #131313;
-}
-
-.track.active {
-    background-color: #1cc51c;
-    color:  #131313;
+.command.active, .track.active {
+    background-color: var(--console-green);
+    color: var(--console-black);
 }
 
 .status {
@@ -65,7 +65,7 @@ body {
 }
 
 .track-container {
-    width: 400px;
+    width: 260px;
     overflow: hidden;
     white-space: nowrap;
     display: inline-block;
@@ -77,8 +77,12 @@ body {
 }
 
 @keyframes marquee {
-    0% { transform: translateX(100%); }
-    100% { transform: translateX(-100%); }
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
 }
 
 #track:hover {
@@ -134,6 +138,44 @@ body {
     display: inline-block;
     width: 10px;
     text-align: center;
+}
+
+/* About modal */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(13, 13, 13, 0.9); /* Transparent background */
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: var(--console-black);
+    border: 1px solid var(--console-green);
+    color: #ff9528;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 16px;
+    padding: 20px;
+    position: relative;
+    max-width: 80%;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+
+.close {
+    background-color: var(--console-black);
+    color: var(--console-green);
+    white-space: nowrap;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
 }
 
 /* Code styling */
