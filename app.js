@@ -137,6 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 loadTrack(index);
                 audio.play();
                 playStopCmd.textContent = '[stop]';
+                updateSpinner();
             });
         });
     }
@@ -225,7 +226,7 @@ document.addEventListener('DOMContentLoaded', () => {
         aboutModal.style.display = 'none';
     });
 
-    // Закрытие по клику вне окна
+    // Close outside the modal
     aboutModal.addEventListener('click', (e) => {
         if (e.target === aboutModal) {
             aboutModal.style.display = 'none';
