@@ -17,12 +17,12 @@ document.addEventListener('DOMContentLoaded', () => {
     let playlist = [];
     let currentTrackIndex = 0;
     let shuffle = false;
-    let repeatMode = 0; // 0: off, 1: track, 2: album, 3: playlist
+    let repeatMode = 0; // 0: off, 1: track, 2: album, 3: all
     let shuffledIndexes = [];
     let currentAlbumTracks = [];
     let spinnerInterval = null;
 
-    // Загрузка треков с сервера
+    // Loading tracks from server
     fetch('api.php')
         .then(response => response.json())
         .then(data => {
@@ -75,13 +75,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     });
                 }
             }
-            loadTrack(0); // Загружаем первый трек
+            loadTrack(0); // Loading first track
             addTrackListeners();
             addCollapseListeners();
             updateCurrentAlbumTracks();
         });
 
-    // Загрузка трека
+    // Loading track
     function loadTrack(index) {
         audio.src = playlist[index].src;
         trackDisplay.textContent = `${playlist[index].name}`;
@@ -95,14 +95,14 @@ document.addEventListener('DOMContentLoaded', () => {
             activeTrack.classList.add('active');
             const spinner = document.createElement('span');
             spinner.className = 'spinner';
-            activeTrack.appendChild(spinner);
+            activeTrack.append(spinner);
         }
         currentTrackIndex = index;
         updateCurrentAlbumTracks();
         updateSpinner();
     }
 
-    // Обновление спиннера
+    // Refreshing spinner
     function updateSpinner() {
         const spinner = document.querySelector('.spinner');
         if (!spinner) return;
@@ -114,19 +114,19 @@ document.addEventListener('DOMContentLoaded', () => {
             spinnerInterval = setInterval(() => {
                 spinner.textContent = frames[frameIndex];
                 frameIndex = (frameIndex + 1) % frames.length;
-            }, 150); // Скорость вращения
+            }, 150); // Spinner rotation speed
         } else {
             spinner.textContent = '';
         }
     }
 
-    // Обновление списка треков текущего альбома
+    // Refreshing track list for current album
     function updateCurrentAlbumTracks() {
         const currentAlbum = playlist[currentTrackIndex].album;
         currentAlbumTracks = playlist.filter(track => track.album === currentAlbum).map(track => playlist.indexOf(track));
     }
 
-    // Обработчики кликов по трекам
+    // Track click handlers
     function addTrackListeners() {
         document.querySelectorAll('.track').forEach(track => {
             track.addEventListener('click', () => {
@@ -138,7 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Обработчики сворачивания/разворачивания
+    // Collapse/extend handlers
     function addCollapseListeners() {
         document.querySelectorAll('.artist > span, .album > span').forEach(header => {
             header.addEventListener('click', () => {
@@ -170,12 +170,12 @@ document.addEventListener('DOMContentLoaded', () => {
         playPreviousTrack();
     });
 
-    // Rewind (-30 секунд)
+    // Rewind (-30 seconds)
     rewCmd.addEventListener('click', () => {
         audio.currentTime = Math.max(0, audio.currentTime - 30);
     });
 
-    // Forward (+30 секунд)
+    // Forward (+30 seconds)
     fwdCmd.addEventListener('click', () => {
         audio.currentTime = Math.min(audio.duration || 0, audio.currentTime + 30);
     });
@@ -187,7 +187,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (shuffle) {
             shuffledIndexes = [...Array(playlist.length).keys()];
             shuffledIndexes.sort(() => Math.random() - 0.5);
-            // Убираем текущий трек из случайного порядка, чтобы не повторился сразу
+            // Removing current track from random order to avoid repeat immediately
             const currentIdx = shuffledIndexes.indexOf(currentTrackIndex);
             if (currentIdx !== -1) shuffledIndexes.splice(currentIdx, 1);
         }
@@ -213,7 +213,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Обновление времени
+    // Refreshing time
     audio.addEventListener('timeupdate', () => {
         const current = audio.currentTime;
         const duration = audio.duration || 0;
@@ -225,7 +225,7 @@ document.addEventListener('DOMContentLoaded', () => {
         timeDisplay.textContent = `${formatTime(current)} / ${formatTime(duration)}`;
     });
 
-    // Автоматический переход к следующему треку
+    // Automatic move to next track
     audio.addEventListener('ended', () => {
         if (repeatMode === 1) {
             audio.currentTime = 0;
@@ -235,21 +235,21 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Воспроизведение следующего трека
+    // Playing next track
     function playNextTrack() {
         if (repeatMode === 2) {
-            // Повтор альбома
+            // Repeat album
             const nextAlbumIndex = (currentAlbumTracks.indexOf(currentTrackIndex) + 1) % currentAlbumTracks.length;
             currentTrackIndex = currentAlbumTracks[nextAlbumIndex];
         } else if (shuffle) {
-            // Случайный порядок
+            // Random order
             if (shuffledIndexes.length > 0) {
                 currentTrackIndex = shuffledIndexes.shift();
             } else {
                 currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
             }
         } else {
-            // Обычный порядок или повтор всего плейлиста
+            // Basic order or repeat whole playlist
             currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
         }
         loadTrack(currentTrackIndex);
@@ -257,13 +257,13 @@ document.addEventListener('DOMContentLoaded', () => {
         playStopCmd.textContent = '[stop]';
     }
 
-    // Воспроизведение предыдущего трека
+    // Playing previous track
     function playPreviousTrack() {
         if (shuffle) {
-            // В случайном порядке предыдущий трек не так важен, идём просто назад
+            // Random order for the next track
             currentTrackIndex = (currentTrackIndex - 1 + playlist.length) % playlist.length;
         } else if (repeatMode === 2) {
-            // Повтор альбома
+            // Repeat album
             const prevAlbumIndex = (currentAlbumTracks.indexOf(currentTrackIndex) - 1 + currentAlbumTracks.length) % currentAlbumTracks.length;
             currentTrackIndex = currentAlbumTracks[prevAlbumIndex];
         } else {
@@ -274,7 +274,7 @@ document.addEventListener('DOMContentLoaded', () => {
         playStopCmd.textContent = '[stop]';
     }
 
-    // Управление громкостью
+    // Volume
     const updateVolumeDisplay = () => {
         const volumePercent = Math.round(audio.volume * 100);
         volumeDisplay.textContent = `${volumePercent}%`;
@@ -290,7 +290,7 @@ document.addEventListener('DOMContentLoaded', () => {
         updateVolumeDisplay();
     });
 
-    // Инициализация громкости
+    // Volume init
     audio.volume = 1; // 100% по умолчанию
     updateVolumeDisplay();
 });
