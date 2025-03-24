@@ -164,14 +164,30 @@ document.addEventListener('DOMContentLoaded', () => {
         updateSpinner();
     });
 
+    // Play/Stop by pressing 'Space' key
+    document.addEventListener('keydown', (event) => {
+        if (event.key === ' ') {
+            if (audio.paused) {
+                audio.play();
+                playStopCmd.textContent = '[stop]';
+            } else {
+                audio.pause();
+                playStopCmd.textContent = '[play]';
+            }
+            updateSpinner();
+        }
+    });
+
     // Next
     nextCmd.addEventListener('click', () => {
         playNextTrack();
+        updateSpinner();
     });
 
     // Previous
     previousCmd.addEventListener('click', () => {
         playPreviousTrack();
+        updateSpinner();
     });
 
     // Rewind (-30 seconds)
