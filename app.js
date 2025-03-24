@@ -314,6 +314,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const updateVolumeDisplay = () => {
         const volumePercent = Math.round(audio.volume * 100);
         volumeDisplay.textContent = `${volumePercent}%`;
+        localStorage.setItem("zabtech_music_volume", audio.volume)
     };
 
     volUpCmd.addEventListener('click', () => {
@@ -327,6 +328,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Volume init
-    audio.volume = 1; // 100% по умолчанию
+    audio.volume = localStorage.getItem("zabtech_music_volume") ?? 1; // 100% by default
     updateVolumeDisplay();
 });
